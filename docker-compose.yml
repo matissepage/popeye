@@ -34,7 +34,6 @@ services:
       image: "postgres:13.2-alpine"
       restart: always
       volumes:
-        - "./postgres.conf:/etc/postgresql/postgresql.conf"
         - "./data:/var/lib/postgresql/data"
         - "./schema.sql:/docker-entrypoint-initdb.d/schema.sql"
       environment:
