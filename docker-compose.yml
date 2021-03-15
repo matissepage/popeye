@@ -29,7 +29,6 @@ services:
       environment:
         - TESLA:"tesla"
 
-
     db:
       image: "postgres:13.2-alpine"
       restart: always
