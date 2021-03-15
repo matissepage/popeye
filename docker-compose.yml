@@ -33,7 +33,7 @@ services:
       image: "postgres:13.2-alpine"
       restart: always
       volumes:
-        - "./data:/var/lib/postgresql/data"
+        - "./db-data:/var/lib/postgresql/data"
         - "./schema.sql:/docker-entrypoint-initdb.d/schema.sql"
       environment:
         POSTGRES_USER: postgres
@@ -69,4 +69,4 @@ networks:
     back-tier:
 
 volumes:
-    database-data:
+    db-data:
