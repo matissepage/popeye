@@ -29,17 +29,6 @@ services:
       environment:
         - TESLA:"tesla"
 
-    worker:
-      image: "worker"
-      restart: always
-      container_name: "worker"
-      build: "./worker"
-      depends_on:
-        - "db"
-      networks:
-        - "back-tier"
-      environment:
-        - TESLA:"tesla"
 
     db:
       image: "postgres:13.2-alpine"
@@ -54,6 +43,18 @@ services:
       networks:
           - "result-tier"
           - "back-tier"
+
+    worker:
+      image: "worker"
+      restart: always
+      container_name: "worker"
+      build: "./worker"
+      depends_on:
+        - "db"
+      networks:
+        - "back-tier"
+      environment:
+        - TESLA:"tesla"
 
     redis:
       image: "redis:alpine"
@@ -70,4 +71,4 @@ networks:
     back-tier:
 
 volumes:
-    db-data:
+    database-data:
