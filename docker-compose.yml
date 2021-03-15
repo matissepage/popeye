@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+    poll:
+      image: "poll"
+      container_name: "poll"
+      build: "./poll"
+      ports:
+        - "5000:80"
+      depends_on:
+        - "redis"
+      networks:
+        - "poll-tier"
+      environment:
+        - TESLA:"tesla"
+
+    result:
+      image: "result"
+      container_name: "result"
+      build: "./result"
+      ports:
+        - "5001:80"
+      depends_on:
+        - "db"
+      networks:
+        - "result-tier"
+      environment:
+        - TESLA:"tesla"
+
+    worker:
+      image: "worker"
+      container_name: "worker"
+      build: "./worker"
+      depends_on:
+        - "db"
+      networks:
+        - "back-tier"
+      environment:
+        - TESLA:"tesla"
+
+    db:
+      image: "postgres:13.2-alpine"
+      volumes:
+        - "./postgres.conf:/etc/postgresql/postgresql.conf"
+        - "./data:/var/lib/postgresql/data"
+        - "./schema.sql:/docker-entrypoint-initdb.d/schema.sql"
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+      networks:
+          - "result-tier"
+          - "back-tier"
+
+    redis:
+      image: "redis:alpine"
+      ports:
+        - "6379:6379"
+      networks:
+        - "poll-tier"
+        - "back-tier"
+
+networks:
+    poll-tier:
+    result-tier:
+    back-tier:
+
+volumes:
+    db-data:
