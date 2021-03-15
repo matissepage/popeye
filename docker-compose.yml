@@ -3,6 +3,7 @@ version: "3"
 services:
     poll:
       image: "poll"
+      restart: always
       container_name: "poll"
       build: "./poll"
       ports:
@@ -16,6 +17,7 @@ services:
 
     result:
       image: "result"
+      restart: always
       container_name: "result"
       build: "./result"
       ports:
@@ -29,6 +31,7 @@ services:
 
     worker:
       image: "worker"
+      restart: always
       container_name: "worker"
       build: "./worker"
       depends_on:
@@ -40,6 +43,7 @@ services:
 
     db:
       image: "postgres:13.2-alpine"
+      restart: always
       volumes:
         - "./postgres.conf:/etc/postgresql/postgresql.conf"
         - "./data:/var/lib/postgresql/data"
@@ -53,6 +57,7 @@ services:
 
     redis:
       image: "redis:alpine"
+      restart: always
       ports:
         - "6379:6379"
       networks:
