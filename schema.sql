@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS votes
 (
   id text PRIMARY KEY,
